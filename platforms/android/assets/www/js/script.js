@@ -11,6 +11,7 @@ var midterm_gere0018 = {
     lists:[],
     numLists:0,
     listview: "",
+    contacts:"",
     initialize: function() {
       midterm_gere0018.bindEvents();
     },
@@ -57,7 +58,7 @@ var midterm_gere0018 = {
          //load the first page with url=null
            midterm_gere0018.loadPage(null);
          //FUTURE: remove this when testing on device. temp for browser testing.
-           midterm_gere0018.contactsSuccess();
+           //midterm_gere0018.contactsSuccess();
 
     },
     handleNav:function (ev){
@@ -121,18 +122,11 @@ var midterm_gere0018 = {
 
     },
 
-    contactsSuccess: function (contacts){
+    contactsSuccess: function (contactsList){
+        contacts = contactsList;
         listview = document.querySelector("[data-role=listview]");
          for( var i=0; i<12; i++){
-            listview.innerHTML += "<li data-ref= li-" + i + ">contact: " + i + contacts[i].displayName + "</li>";
-            var contactName = document.querySelector('#contactName');
-            var contactPhoneNumbers = document.querySelector('#contactPhoneNumbers');
-             if(contacts[i].phoneNumbers){
-                  contactPhoneNumbers.value = contacts[i].phoneNumbers.toString();
-             }else{
-                 contactPhoneNumbers.value = "";
-             }
-            contactName.value = contacts[i].displayName;
+            listview.innerHTML += "<li data-ref= " + i + ">" + contacts[i].displayName + "</li>";
             var hammerlistview = new Hammer.Manager(listview);
             var singleTap = new Hammer.Tap({ event: 'singletap' });
             var doubleTap = new Hammer.Tap({event: 'doubletap', taps: 2 });
@@ -160,11 +154,25 @@ var midterm_gere0018 = {
         var map1 =new google.maps.Map(contactsMap, mapOptions);
 
     },
-    displayContact: function(contacts){
+    displayContact: function(ev){
       console.log("contact display");
        var overlay = document.querySelector('[data-role=overlay]');
        var modal = document.querySelector('[data-role= modal]');
        var ok = document.querySelector('#btnOk');
+       var contactName = document.querySelector('#contactName');
+       var contactPhoneNumbers = document.querySelector('#contactPhoneNumbers');
+        console.log(ev.target);
+       var i = ev.target.getAttribute("data-ref");
+       contactName.value = contacts[i].displayName;
+       if(contacts[i].phoneNumbers){
+            for(var j=0; j<contacts[i].phoneNumbers.length; j++){
+               contactPhoneNumbers.value = contacts[i].phoneNumbers[j].value;
+            }
+
+       }else{
+            contactPhoneNumbers.value = "";
+         }
+
        overlay.style.display = "block";
        modal.style.display = "block";
        var hammerOk = new Hammer(ok);
