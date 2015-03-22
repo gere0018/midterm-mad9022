@@ -1,0 +1,37 @@
+/*Pages Transitions******************************************************/
+/* rotate newspaper */
+.pt-page-rotateOutNewspaper {
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-animation: rotateOutNewspaper 1s both ease-in;
+  animation: rotateOutNewspaper 1s both ease-in; }
+
+.pt-page-rotateInNewspaper {
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-animation: rotateInNewspaper 1s both ease-out;
+  animation: rotateInNewspaper 1s both ease-out; }
+
+.pt-page-delay500 {
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s; }
+
+/* newspaper */
+@-webkit-keyframes rotateOutNewspaper {
+  to {
+    -webkit-transform: translateZ(-3000px) rotateZ(360deg) scale(0);
+    opacity: 0; } }
+@keyframes rotateOutNewspaper {
+  to {
+    -webkit-transform: translateZ(-3000px) rotateZ(360deg) scale(0);
+    transform: translateZ(-3000px) rotateZ(360deg) scale(0);
+    opacity: 0; } }
+@-webkit-keyframes rotateInNewspaper {
+  from {
+    -webkit-transform: translateZ(-3000px) rotateZ(-360deg) scale(0);
+    opacity: 0; } }
+@keyframes rotateInNewspaper {
+  from {
+    -webkit-transform: translateZ(-3000px) rotateZ(-360deg) scale(0);
+    transform: translateZ(-3000px) rotateZ(-360deg) scale(0);
+    opacity: 0; } }
