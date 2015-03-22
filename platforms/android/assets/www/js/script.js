@@ -15,7 +15,7 @@ var midterm_gere0018 = {
       midterm_gere0018.bindEvents();
     },
     bindEvents: function() {
-      //document.addEventListener('deviceready', midterm_gere0018.onDeviceReady, false);
+      document.addEventListener('deviceready', midterm_gere0018.onDeviceReady, false);
       document.addEventListener("DOMContentLoaded", midterm_gere0018.onDomReady, false);
     },
     onDeviceReady: function() {
@@ -30,7 +30,7 @@ var midterm_gere0018 = {
         if( navigator.geolocation ){
         var getLocation = {enableHighAccuracy: false, timeout:60000, maximumAge:60000};
         navigator.geolocation.getCurrentPosition( midterm_gere0018.reportPosition,
-                                                 app1_gere0018.gpsError, getLocation);
+                                                 midterm_gere0018.gpsError, getLocation);
         //If it doesn't alert the user with the following message.
         }else{
             alert("OOPS!! your browser needs to be updated and currently does not support location based services.")
@@ -123,23 +123,24 @@ var midterm_gere0018 = {
 
     contactsSuccess: function (contacts){
         listview = document.querySelector("[data-role=listview]");
-//         for( var i=0; i<contacts.length; i++){
-//            contactsOutput.innerHTML = "<li [data-ref="i"]>" + contacts[i].displayName
-//                                        + contacts[i].phoneNumbers[0] + "</li>";
-//        var contactName = document.querySelector('#contactName');
-//        var contactPhoneNumbers = document.querySelector('#contactPhoneNumbers');
-//        contactName.value = contacts[i].displayName;
-//        contactPhoneNumbers.value = contacts[i].phoneNumbers[0];
-          var listItems = document.querySelectorAll('[data-ref^="li-"]');
-         for( var i=0; i<13; i++){
-            var hammerListItem = new Hammer.Manager(listItems[i], {});
+         for( var i=0; i<12; i++){
+            listview.innerHTML += "<li data-ref= li-" + i + ">contact: " + i + contacts[i].displayName + "</li>";
+            var contactName = document.querySelector('#contactName');
+            var contactPhoneNumbers = document.querySelector('#contactPhoneNumbers');
+             if(contacts[i].phoneNumbers){
+                  contactPhoneNumbers.value = contacts[i].phoneNumbers.toString();
+             }else{
+                 contactPhoneNumbers.value = "";
+             }
+            contactName.value = contacts[i].displayName;
+            var hammerlistview = new Hammer.Manager(listview);
             var singleTap = new Hammer.Tap({ event: 'singletap' });
             var doubleTap = new Hammer.Tap({event: 'doubletap', taps: 2 });
-            hammerListItem.add([doubleTap, singleTap]);
+            hammerlistview.add([doubleTap, singleTap]);
             doubleTap.recognizeWith(singleTap);
             singleTap.requireFailure([doubleTap]);
-            hammerListItem.on('doubletap', midterm_gere0018.displayContactLocation);
-            hammerListItem.on('singletap', midterm_gere0018.displayContact);
+            hammerlistview.on('doubletap', midterm_gere0018.displayContactLocation);
+            hammerlistview.on('singletap', midterm_gere0018.displayContact);
 
          }
 
@@ -164,8 +165,6 @@ var midterm_gere0018 = {
        var overlay = document.querySelector('[data-role=overlay]');
        var modal = document.querySelector('[data-role= modal]');
        var ok = document.querySelector('#btnOk');
-       var contactName = document.querySelector('#contactName');
-       var contactPhoneNumbers = document.querySelector('#contactPhoneNumbers');
        overlay.style.display = "block";
        modal.style.display = "block";
        var hammerOk = new Hammer(ok);
@@ -193,19 +192,6 @@ var midterm_gere0018 = {
         var map =new google.maps.Map(mapContainer, mapOptions);
 
    },
-//    displayLocation: function(){
-//        //hide contacts listview
-//       listview.style.display = "none";
-//        //display map container
-//        var contactsMap = document.querySelector(".contactsMap");
-//        var mapOptions ={
-//          center:new google.maps.LatLng(45.348247,-75.756086),
-//          zoom:14,
-//          mapTypeId: google.maps.MapTypeId.ROADMAP
-//        };
-//        var map =new google.maps.Map(contactsMap, mapOptions);
-//
-//    },
     //contacts error fucntion
     contactsError:function (){
         alert("sorry !! we are not able to load your contact right now!!")
