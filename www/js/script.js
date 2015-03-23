@@ -12,6 +12,7 @@ var midterm_gere0018 = {
     numLists:0,
     listview: "",
     contacts:"",
+    contactsMap: "",
     initialize: function() {
       midterm_gere0018.bindEvents();
     },
@@ -52,9 +53,10 @@ var midterm_gere0018 = {
 	   for(var i=0;i<numLists; i++){
            var hammerLists = new Hammer(lists[i]);
            hammerLists.on('tap', midterm_gere0018.handleNav);
-            //FUTURE:add listener to browser's back button
 
         }
+           //add listener to browser's back button
+          window.addEventListener("popstate", midterm_gere0018.browserBackButton, false);
          //load the first page with url=null
            midterm_gere0018.loadPage(null);
          //FUTURE: remove this when testing on device. temp for browser testing.
@@ -90,9 +92,9 @@ var midterm_gere0018 = {
                     setTimeout(function(){
                         window.scrollTo(0,0);
                     },100);
-                      if(pages[i].id == "location"){
-                      midterm_gere0018.displayLocation();
-                      }
+//                      if(pages[i].id == "location"){
+//                      midterm_gere0018.displayLocation(position);
+//                      }
 
                 history.pushState(null, null, "#" + url);
                 }else{
@@ -121,6 +123,24 @@ var midterm_gere0018 = {
             }
 
     },
+     //Need a listener for the popstate event to handle the back button
+    browserBackButton:function (ev){
+      url = window.location.hash;  //hash will include the "#" + the string after it.
+      //update the visible div and the active tab
+      for(var i=0; i < numPages; i++){
+          if(("#" + pages[i].id) == url){
+            pages[i].className = "activePage";
+          }else{
+            pages[i].classList.remove("activePage");
+          }
+      }
+      for(var t=0; t < numLists; t++){
+        links[t].classList.remove("activeTab");
+        if(lists[t].href == window.location.href){
+          lists[t].classList.add("activeTab");
+        }
+      }
+    },
 
     contactsSuccess: function (contactsList){
         contacts = contactsList;
@@ -136,15 +156,36 @@ var midterm_gere0018 = {
             hammerlistview.on('doubletap', midterm_gere0018.displayContactLocation);
             hammerlistview.on('singletap', midterm_gere0018.displayContact);
 
+             //save contacts to local storage
+            if( 'localStorage' in window ){
+//                if("!Lat"){
+//                    var Latitude = ;
+//
+//                }
+                localStorage.setItem({"Id": i,
+                                     "Name" : JSON.stringify(contacts[i].displayName),
+                                     "Numbers": JSON.stringify(contacts[i].phoneNumbers),
+                                     "Lat": "",
+                                     "Long": ""});
+
+            }
+
          }
 
 
 
     },
+
     displayContactLocation: function(){
-        var overlay = document.querySelector('[data-role=overlay]');
-        var contactsMap = document.querySelector("#contactsMap");
-        overlay.style.display = "block";
+        contactsMap = document.querySelector("#contactsMap");
+        var backBtn = document.querySelector("#backBtn");
+        var H1 = document.querySelector("h1");
+        backBtn.style.display = "inline-block";
+        H1.classList.add("moveH1");
+        var hammerBackBtn = new Hammer( backBtn);
+        hammerBackBtn.on("tap", midterm_gere0018.browserBackButton);
+        pages[0].classList.remove("activePage");
+        pages[1].classList.add("activePage");
         var mapOptions ={
           center:new google.maps.LatLng(45.348247,-75.756086),
           zoom:8,
@@ -166,7 +207,7 @@ var midterm_gere0018 = {
        contactName.value = contacts[i].displayName;
        if(contacts[i].phoneNumbers){
             for(var j=0; j<contacts[i].phoneNumbers.length; j++){
-               contactPhoneNumbers.value += contacts[i].phoneNumbers[j].value;
+               contactPhoneNumbers.value += contacts[i].phoneNumbers[j].value + "</br>";
             }
 
        }else{
@@ -185,19 +226,20 @@ var midterm_gere0018 = {
    },
      //success function
     reportPosition:function( position ){
-         midterm_gere0018.displayLocation();
+        midterm_gere0018.displayLocation(position);
+        midterm_gere0018.displayContactLocation(position);
         },
 
     displayLocation: function(){
         //create map options object
         var mapOptions ={
-          center:new google.maps.LatLng(45.348247,-75.756086),
-          zoom:14,
+          center:new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
+          zoom:8,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        var mapContainer = document.querySelector(".mapContainer");
-        //call the constructor function for the google Maps Object
-        var map =new google.maps.Map(mapContainer, mapOptions);
+          contactsMap = document.querySelector("#contactsMap");
+        contactsMap.style.display = "block";
+        var map1 =new google.maps.Map(contactsMap, mapOptions);
 
    },
     //contacts error fucntion

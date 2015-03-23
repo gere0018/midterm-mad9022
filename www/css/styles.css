@@ -95,9 +95,8 @@ body {
     font-size: 1.5rem;
     color: #DBD1BF;
     letter-spacing: 2px;
-    display: inline;
-    width: 100%;
-    float: left; }
+    display: inline-block;
+    width: 100%;}
 /* Horizontal Menu *********************************************************/
 .navBar {
   position: fixed;
@@ -212,6 +211,17 @@ svg {
     margin: 5% 0;
 
 }
+#backBtn{
+    display: none;
+    width: 7%;
+    height:52%;
+    padding-left: 1rem;
+}
+.movedH1{
+    text-align: right;
+    width: 80%;
+
+}
 
 #btnOk{
    width: 20%;
@@ -221,16 +231,9 @@ svg {
     width: 96%;
     height: 75%;
     margin: 2%;
-    top: 6rem;
     z-index:20;
-    display: none;
-}
-/* Location page *********************************************************/
-.mapContainer{
-   margin: 2%;
-    width: 96%;
-    height: 75%;
     border: 1px solid #3B628F;
+    display: none;
 }
 
 /* Footer *********************************************************/
