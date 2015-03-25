@@ -80,8 +80,8 @@ var midterm_gere0018 = {
         //reset local storage
          //contactObjectsArray=[];
          var contactObjectString = JSON.stringify(contactObjectsArray);
-         localStorage.setItem("Mycontacts", contactObjectString);
-         parsedContacts = JSON.parse(localStorage.getItem("Mycontacts"));
+         localStorage.setItem("myContacts", contactObjectString);
+         parsedContacts = JSON.parse(localStorage.getItem("myContacts"));
          for( var i=0; i<12; i++){
              listview.innerHTML += '<li data-ref = "' + i + '">'+ parsedContacts[i].name + '</li>';
          }
@@ -131,7 +131,7 @@ var midterm_gere0018 = {
 //         if(midterm_gere0018.marker){
 //             midterm_gere0018.marker.setMap(null);
 //         };
-          var i = ev.target.getAttribute("data-ref");
+         var i = ev.target.getAttribute("data-ref");
          if(parsedContacts[i].lat && parsedContacts[i].lng){
              console.log("lat and long has saved value");
             var myLatlng = new google.maps.LatLng(parsedContacts[i].lat,
@@ -193,8 +193,15 @@ var midterm_gere0018 = {
                 google.maps.event.addListener(map, 'dblclick', function(event) {
                   placeMarker(event.latLng);
                     //set lat and long in localstorage
-                  localStorage.setItem(parsedContacts[i].lat, event.latLng.lat);
-                  localStorage.setItem(parsedContacts[i].lng,event.latLng.lng);
+                    parsedContacts[i].lat = event.latLng.k;
+                    parsedContacts[i].lng = event.latLng.D;
+                    console.log("The Following JSON is updated");
+                    console.log(parsedContacts);
+                    //console.log(event.latLng.k);
+                    //reset the whole object in local storage everytime you add a new
+                    //value or make a change. I cannot add the changed value alone.
+                  localStorage.setItem("myContacts", JSON.stringify(parsedContacts));
+
                 });
 
             });

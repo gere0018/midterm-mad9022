@@ -6,6 +6,8 @@ var midterm_gere0018 = {
     contactPostion:"",
     loadCount: 0,
     contactsMap: "",
+    backBtn: "",
+    overlay:"",
     parsedContacts: [],
     marker:{},
     initialize: function() {
@@ -24,8 +26,12 @@ var midterm_gere0018 = {
     },
    execute: function() {
        console.log("entered execute");
-        //find the user's location to create map
+        //define my global variables
         pages = document.querySelectorAll('[data-role = "page"]');
+        backBtn = document.querySelector("#backBtn");
+        overlay = document.querySelector('[data-role=overlay]');
+
+        //find the user's location to create map
         if( navigator.geolocation ){
         var getLocation = {enableHighAccuracy: false, timeout:60000, maximumAge:60000};
         navigator.geolocation.getCurrentPosition( midterm_gere0018.reportPosition,
@@ -74,10 +80,8 @@ var midterm_gere0018 = {
         //reset local storage
          //contactObjectsArray=[];
          var contactObjectString = JSON.stringify(contactObjectsArray);
-         localStorage.setItem("Mycontacts", contactObjectString);
-         console.log(contactObjectString);
-
-        parsedContacts = JSON.parse(localStorage.getItem("Mycontacts"));
+         localStorage.setItem("myContacts", contactObjectString);
+         parsedContacts = JSON.parse(localStorage.getItem("myContacts"));
          for( var i=0; i<12; i++){
              listview.innerHTML += '<li data-ref = "' + i + '">'+ parsedContacts[i].name + '</li>';
          }
@@ -89,7 +93,6 @@ var midterm_gere0018 = {
 
     },
     displayContact: function(ev){
-       var overlay = document.querySelector('[data-role=overlay]');
        var modal = document.querySelector('[data-role= modal]');
        var ok = document.querySelector('#btnOk');
        var contactName = document.querySelector('#contactName');
@@ -118,7 +121,6 @@ var midterm_gere0018 = {
 
     displayContactLocation: function(ev){
         contactsMap = document.querySelector("#contactsMap");
-        var backBtn = document.querySelector("#backBtn");
         var H1 = document.querySelector("h1");
         backBtn.style.display = "inline-block";
         H1.setAttribute("id", "movedH1");
@@ -129,7 +131,7 @@ var midterm_gere0018 = {
 //         if(midterm_gere0018.marker){
 //             midterm_gere0018.marker.setMap(null);
 //         };
-          var i = ev.target.getAttribute("data-ref");
+         var i = ev.target.getAttribute("data-ref");
          if(parsedContacts[i].lat && parsedContacts[i].lng){
              console.log("lat and long has saved value");
             var myLatlng = new google.maps.LatLng(parsedContacts[i].lat,
@@ -158,7 +160,6 @@ var midterm_gere0018 = {
             var marker;
             var msgBox = document.querySelector("#msgBox");
             msgBox.style.display = "block";
-            var overlay = document.querySelector('[data-role=overlay]');
             overlay.style.display = "block";
             //ok button allows user to go back to map
             var ok2 = document.querySelector("#btnOk2");
@@ -171,6 +172,7 @@ var midterm_gere0018 = {
                   center:new google.maps.LatLng(contactPostion.coords.latitude,
                                                 contactPostion.coords.longitude),
                   zoom:12,
+                  disableDoubleClickZoom: true,
                   mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
                 pages[0].classList.remove("activePage");
@@ -191,9 +193,13 @@ var midterm_gere0018 = {
                 google.maps.event.addListener(map, 'dblclick', function(event) {
                   placeMarker(event.latLng);
                     //set lat and long in localstorage
-                  localStorage.setItem("Lat"+i, event.latLng.lat);
-                  localStorage.setItem("Long"+i,event.latLng.lng);
-
+                    parsedContacts[i].lat = event.latLng.k;
+                    parsedContacts[i].lng = event.latLng.D;
+                    console.log("The Following JSON is updated");
+                    console.log(parsedContacts);
+                    //console.log(event.latLng.k);
+                  localStorage.setItem("myContacts", JSON.stringify(parsedContacts));
+                  //localStorage.setItem("myContacts", JSON.stringify(parsedContacts[i].lng));
                 });
 
             });
@@ -204,6 +210,7 @@ var midterm_gere0018 = {
     browserBackButton:function (ev){
       pages[1].classList.remove("activePage");
       pages[0].classList.add("activePage");
+      backBtn.style.display ="none";
     },
 
     //contacts error fucntion
