@@ -53,7 +53,7 @@ body {
   position: absolute;
   width: 100%;
   height:100%;
-  top: 6rem;
+  top: 3rem;
   left: 0;
   visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -97,6 +97,10 @@ body {
     letter-spacing: 2px;
     display: inline-block;
     width: 100%;}
+#movedH1{
+    width: 75%;
+
+}
 /* Horizontal Menu *********************************************************/
 .navBar {
   position: fixed;
@@ -177,7 +181,7 @@ svg {
 }
 [data-role=overlay]{
   position:fixed;
-  top:6;
+  top:3;
   left:0;
   z-index:10;
   height:100%;
@@ -188,11 +192,11 @@ svg {
 }
 [data-role=modal]{
   position:fixed;
-  top:23%;
+  top:17%;
   left:3%;
   width: 76%;
   z-index:15;
-  height: 25%;
+  height: 45%;
   padding:5vh;
   border:1px solid #333;
   color:#DBD1BF;
@@ -200,15 +204,14 @@ svg {
   box-shadow:1px 1px 2px rgb(0,0,0);
   display: none;
 }
+.contactinfo{
+    height: 15%;
+    width: 99%;
+ color:#DBD1BF;
+}
 #contactInfoForm{
     width: 100%;
     height: 100%;
-
-}
-.textInput{
-    width: 80%;
-    height: 13%;
-    margin: 5% 0;
 
 }
 #backBtn{
@@ -217,15 +220,16 @@ svg {
     height:52%;
     padding-left: 1rem;
 }
-.movedH1{
-    text-align: right;
-    width: 80%;
 
-}
 
-#btnOk{
-   width: 20%;
-    height: 20%;
+#btnOk, #btnOk2{
+    width: 20%;
+    height:20%;
+    margin-top: 33%;
+    margin-left: 40%;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: "Garamond", sans-serif;
 }
 #contactsMap{
     width: 96%;
@@ -233,7 +237,22 @@ svg {
     margin: 2%;
     z-index:20;
     border: 1px solid #3B628F;
-    display: none;
+}
+#msgBox{
+  position:fixed;
+  top:20%;
+  left:3%;
+  width: 76%;
+  z-index:15;
+  height: 45%;
+  padding:5vh;
+  border:1px solid #333;
+  background-color:#3B628F;
+  box-shadow:1px 1px 2px rgb(0,0,0);
+  display: none;
+}
+#msgBox p{
+  color:#DBD1BF;
 }
 
 /* Footer *********************************************************/

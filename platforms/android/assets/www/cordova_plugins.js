@@ -67,9 +67,9 @@ module.exports = [
 module.exports.metadata =
 // TOP OF METADATA
 {
-    "org.apache.cordova.contacts": "0.2.16",
     "org.apache.cordova.geolocation": "0.3.12",
-    "org.apache.cordova.console": "0.2.13"
+    "org.apache.cordova.console": "0.2.13",
+    "org.apache.cordova.contacts": "0.2.16"
 }
 // BOTTOM OF METADATA
 });
