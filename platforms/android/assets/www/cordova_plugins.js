@@ -64,7 +64,7 @@ module.exports = [
         ]
     }
 ];
-module.exports.metadata =
+module.exports.metadata = 
 // TOP OF METADATA
 {
     "org.apache.cordova.geolocation": "0.3.12",

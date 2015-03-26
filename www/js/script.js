@@ -75,16 +75,16 @@ var midterm_gere0018 = {
     contactsSuccess: function (deviceContacts){
         contacts = deviceContacts;
         //create an array that will contain all the contacts objects
-        parsedContacts = JSON.parse(localStorage.getItem("myContacts"));
+        //parsedContacts = JSON.parse(localStorage.getItem("myContacts"));
         var contactObjectsArray = [];
         for( var i=0; i<12; i++){
              //create an object of each contact with the values that I want to save.
              var objectContact = {
                  "id":i,
                  "name": contacts[i].displayName,
-                 "numbers": contacts[i].phoneNumbers, //phone numbers will be an object by itself
-                 "lat":  parsedContacts[i].lat,
-                 "lng":  parsedContacts[i].lng
+                 "numbers": contacts[i].phoneNumbers
+                 //"lat":  parsedContacts[i].lat,
+                 //"lng":  parsedContacts[i].lng
              };
              contactObjectsArray.push(objectContact);
         }

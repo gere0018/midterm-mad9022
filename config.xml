@@ -1,13 +1,22 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="ca.edumedia.gere0018.midterm" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
 
-    <name>Midterm-Mad9022</name>
+    <name>Midterm-gere0018</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+       mideterm for mad9022 using cordov android platform contacts and geolocation api and hammer js.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
-    </author>
+    <author email="gere0018@algonquinlive.com" href="https://github.com/gere0018/midterm-mad9022">
+       Nehmat Gereige
+    </author>rdova Team
+
     <content src="index.html" />
     <access origin="*" />
+    <preference name="android-minSdkVersion" value="18" />
+    <platform name="android">
+      <icon src="www/img/people-48px.png" density="mdpi" />
+      <icon src="www/img/people-72px.png" density="hdpi" />
+      <icon src="www/img/people-96px.png" density="xhdpi" />
+      <icon src="www/img/people-144px.png" density="xxhdpi" />
+      <icon src="www/img/people-192px.png" density="xxhdpi" />
+    </platform>
 </widget>

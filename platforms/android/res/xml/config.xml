@@ -4,13 +4,19 @@
     <feature name="Contacts">
         <param name="android-package" value="org.apache.cordova.contacts.ContactManager" />
     </feature>
-    <name>Midterm-Mad9022</name>
+    <icon density="mdpi" src="www/img/people-48px.png" />
+    <icon density="hdpi" src="www/img/people-72px.png" />
+    <icon density="xhdpi" src="www/img/people-96px.png" />
+    <icon density="xxhdpi" src="www/img/people-144px.png" />
+    <icon density="xxhdpi" src="www/img/people-192px.png" />
+    <name>Midterm-gere0018</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+       mideterm for mad9022 using cordov android platform contacts and geolocation api and hammer js.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="gere0018@algonquinlive.com" href="https://github.com/gere0018/midterm-mad9022">
+       Nehmat Gereige
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <preference name="android-minSdkVersion" value="18" />
 </widget>

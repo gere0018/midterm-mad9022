@@ -52,7 +52,7 @@ var midterm_gere0018 = {
         var filter = ["displayName"];
         navigator.contacts.find(filter, midterm_gere0018.contactsSuccess,
                                 midterm_gere0018.contactsError, options);
-        
+
         //add hammer Listener to the Ul listview*****************************************
         var hammerlistview = new Hammer.Manager(listview);
         var singleTap = new Hammer.Tap({ event: 'singletap' });
@@ -62,7 +62,7 @@ var midterm_gere0018 = {
         singleTap.requireFailure([doubleTap]);
         hammerlistview.on('singletap', midterm_gere0018.displayContact);
         hammerlistview.on('doubletap', midterm_gere0018.displayContactLocation);
-        
+
         //add listener to hardware's back button*****************************************
         window.addEventListener("popstate", midterm_gere0018.browserBackButton, false);
     },
@@ -75,16 +75,16 @@ var midterm_gere0018 = {
     contactsSuccess: function (deviceContacts){
         contacts = deviceContacts;
         //create an array that will contain all the contacts objects
-        parsedContacts = JSON.parse(localStorage.getItem("myContacts"));
+        //parsedContacts = JSON.parse(localStorage.getItem("myContacts"));
         var contactObjectsArray = [];
         for( var i=0; i<12; i++){
              //create an object of each contact with the values that I want to save.
              var objectContact = {
                  "id":i,
                  "name": contacts[i].displayName,
-                 "numbers": contacts[i].phoneNumbers, //phone numbers will be an object by itself
-                 "lat":  parsedContacts[i].lat,
-                 "lng":  parsedContacts[i].lng
+                 "numbers": contacts[i].phoneNumbers 
+                 //"lat":  parsedContacts[i].lat,
+                 //"lng":  parsedContacts[i].lng
              };
              contactObjectsArray.push(objectContact);
         }
@@ -92,7 +92,7 @@ var midterm_gere0018 = {
          var contactObjectString = JSON.stringify(contactObjectsArray);
          localStorage.setItem("myContacts", contactObjectString);
          parsedContacts = JSON.parse(localStorage.getItem("myContacts"));
-        
+
          for( var i=0; i<12; i++){
              // var contactPhoto = "http://placehold.it/50x50";
 //             if(parsedContacts[i].photos.value == null) {
@@ -146,7 +146,7 @@ var midterm_gere0018 = {
              midterm_gere0018.marker.setMap(null);
              console.log(" clear marker");
          };
-        //get the data-ref value of the li that is clicked to get its contact info 
+        //get the data-ref value of the li that is clicked to get its contact info
          var i = ev.target.getAttribute("data-ref");
         //check if this contact's lat and lng have been set in local storage
          if(parsedContacts[i].lat && parsedContacts[i].lng){
@@ -171,6 +171,7 @@ var midterm_gere0018 = {
           //display the location page containing the map
           pages[0].classList.remove("activePage");
           pages[1].classList.add("activePage");
+          //push history state to allow hardware backbtn to function
           history.pushState(null, null, "#location");
           //adjust title position to accomodate backbtn
           H1.classList.add("movedH1");
@@ -197,15 +198,16 @@ var midterm_gere0018 = {
                 overlay.style.display = "none";
                 pages[0].classList.remove("activePage");
                 pages[1].classList.add("activePage");
+
                 history.pushState(null, null, "#location");
                 H1.classList.add("movedH1");
                 backBtn.style.display = "inline-block";
                 //add hammer on back button. I noticed that hammer works only after button's diplay is
-                //block. hammer didn't work when added before. that's way this code is redundant in 
+                //block. hammer didn't work when added before. that's way this code is redundant in
                 //if and else.
                 var hammerBackBtn = new Hammer( backBtn);
                 hammerBackBtn.on("tap", midterm_gere0018.browserBackButton);
-                
+
                 //create the map with center current user position
                 var mapOptions ={
                   center:new google.maps.LatLng(contactPostion.coords.latitude,
@@ -216,7 +218,7 @@ var midterm_gere0018 = {
                   mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
                 var map =new google.maps.Map(contactsMap, mapOptions);
-                
+
                 //placemarker function allows the user only one marker
                 function placeMarker(location) {
                   if ( midterm_gere0018.marker ) {
@@ -235,17 +237,17 @@ var midterm_gere0018 = {
                 google.maps.event.addListener(map, 'dblclick', function(event) {
                     console.log("setting marker");
                     placeMarker(event.latLng);//console.log(event.latLng);
-                    
+
                     //set lat and long in the parsedcontacts object
                     parsedContacts[i].lat = event.latLng.k;
                     parsedContacts[i].lng = event.latLng.D;
-                
+
                     //reset the whole object in local storage everytime you add a new
                     //value or make a change. Cannot add the changed value alone.
                      localStorage.setItem("myContacts", JSON.stringify(parsedContacts));
-                   
+
                 });
-            
+
             });
         }
 
