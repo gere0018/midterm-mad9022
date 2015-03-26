@@ -5,6 +5,8 @@ var midterm_gere0018 = {
     pages:[],
     contacts:"",
     contactPostion:"",
+    contactLatitude:"",
+    contactLongitude:"",
     contactsMap: "",
     backBtn: "",
     overlay:"",
@@ -35,6 +37,8 @@ var midterm_gere0018 = {
         overlay = document.querySelector('[data-role=overlay]');
         H1 = document.querySelector("h1");
         contactsMap = document.querySelector("#contactsMap");
+
+
 
         //find the user's location to create map*****************************************
         if( navigator.geolocation ){
@@ -74,36 +78,46 @@ var midterm_gere0018 = {
     //Contacts success function
     contactsSuccess: function (deviceContacts){
         contacts = deviceContacts;
-        //create an array that will contain all the contacts objects
-        //parsedContacts = JSON.parse(localStorage.getItem("myContacts"));
-        var contactObjectsArray = [];
+        //check and handle localstorage*******************************************
+        if(window.localStorage) {
+            console.log("window has localstorage");
+             parsedContacts = JSON.parse(localStorage.getItem("myContacts"));
+            //when first opening app check if key doesn't exists in local storgae
+            if (parsedContacts === null) {
+                parsedContacts = [];
+            }
+        }
+         //loop through my loaded contacts and transform each into a JSOn object
         for( var i=0; i<12; i++){
              //create an object of each contact with the values that I want to save.
              var objectContact = {
                  "id":i,
                  "name": contacts[i].displayName,
-                 "numbers": contacts[i].phoneNumbers
-                 //"lat":  parsedContacts[i].lat,
-                 //"lng":  parsedContacts[i].lng
+                 "numbers": contacts[i].phoneNumbers,
              };
-             contactObjectsArray.push(objectContact);
+            //if there is a saved lat and long value from previous use. when app first opens,
+            //add values it to my contact object. otherwise lat and lng are set to null.
+            if( parsedContacts[i].lat){
+                objectContact.lat = parsedContacts[i].lat;
+            }else{
+                objectContact.lat = null;
+            }
+            if( parsedContacts[i].lng){
+                objectContact.lng = parsedContacts[i].lng;
+            }else{
+                objectContact.lng = null;
+            }
+
+             parsedContacts.push(objectContact);
         }
-        //stringify the ContactObjectArray and save it in local storage as a value for key myContacts.
-         var contactObjectString = JSON.stringify(contactObjectsArray);
-         localStorage.setItem("myContacts", contactObjectString);
+        //stringify the parsedContacts and save it in local storage as a value for key myContacts.
+         var stringContacts = JSON.stringify(parsedContacts);
+         localStorage.setItem("myContacts", stringContacts);
          parsedContacts = JSON.parse(localStorage.getItem("myContacts"));
 
          for( var i=0; i<12; i++){
-             // var contactPhoto = "http://placehold.it/50x50";
-//             if(parsedContacts[i].photos.value == null) {
-//               contactPhoto = "../img/people.svg";
-//             }else{
-//               contactPhoto = parsedContacts[i].photos[0].value;
-//             }
-
              listview.innerHTML += '<li data-ref = "' + i + '">' + parsedContacts[i].name + '</li>';
          }
-
 
     },
     //contacts error fucntion
@@ -145,12 +159,29 @@ var midterm_gere0018 = {
          if(midterm_gere0018.marker){
              midterm_gere0018.marker.setMap(null);
              console.log(" clear marker");
-         };
+             console.log(midterm_gere0018.marker);
+         }
         //get the data-ref value of the li that is clicked to get its contact info
          var i = ev.target.getAttribute("data-ref");
         //check if this contact's lat and lng have been set in local storage
          if(parsedContacts[i].lat && parsedContacts[i].lng){
              console.log("lat and long has saved value");
+             //display the location page containing the map
+              pages[0].classList.remove("activePage");
+              pages[1].classList.add("activePage");
+              //push history state to allow hardware backbtn to function
+              history.pushState(null, null, "#location");
+              //adjust title position to accomodate backbtn
+              H1.classList.add("movedH1");
+              //display backbtn
+              backBtn.style.display = "inline-block";
+
+         //add hammer on back button. I noticed that hammer works only after button's diplay is
+         //block. hammer didn't work when added before.
+          var hammerBackBtn = new Hammer( backBtn);
+          hammerBackBtn.on("tap", midterm_gere0018.browserBackButton);
+
+
         //set map with existing lat and long values.
           var myLatlng = new google.maps.LatLng(parsedContacts[i].lat,
                                                    parsedContacts[i].lng);
@@ -168,21 +199,6 @@ var midterm_gere0018 = {
               animation: google.maps.Animation.DROP,
               title: 'user position'
           });
-          //display the location page containing the map
-          pages[0].classList.remove("activePage");
-          pages[1].classList.add("activePage");
-          //push history state to allow hardware backbtn to function
-          history.pushState(null, null, "#location");
-          //adjust title position to accomodate backbtn
-          H1.classList.add("movedH1");
-          //display backbtn
-          backBtn.style.display = "inline-block";
-
-         //add hammer on back button. I noticed that hammer works only after button's diplay is
-         //block. hammer didn't work when added before.
-          var hammerBackBtn = new Hammer( backBtn);
-          hammerBackBtn.on("tap", midterm_gere0018.browserBackButton);
-
 
         }else{
              //if there is no saved value for longitude and latitude in local storage,
@@ -221,9 +237,13 @@ var midterm_gere0018 = {
 
                 //placemarker function allows the user only one marker
                 function placeMarker(location) {
+                    console.log("Inside placeMarker");
                   if ( midterm_gere0018.marker ) {
+                      console.log("marker has a value");
                     midterm_gere0018.marker.setPosition(location);
                     midterm_gere0018.marker.setMap(map);
+                    midterm_gere0018.marker.setAnimation(null);
+                    midterm_gere0018.marker.setAnimation(google.maps.Animation.DROP);
                   } else {
                     midterm_gere0018.marker = new google.maps.Marker({
                       position: location,
@@ -242,6 +262,7 @@ var midterm_gere0018 = {
                     parsedContacts[i].lat = event.latLng.k;
                     parsedContacts[i].lng = event.latLng.D;
 
+                     console.log(parsedContacts[i]);
                     //reset the whole object in local storage everytime you add a new
                     //value or make a change. Cannot add the changed value alone.
                      localStorage.setItem("myContacts", JSON.stringify(parsedContacts));

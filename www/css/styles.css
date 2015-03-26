@@ -40,8 +40,8 @@ body {
 
 /* Page Wrapper *********************************************************/
 #pageWrapper {
-  position: relative;
-  left: 0;
+/*  position: relative;*/
+/*  left: 0;*/
   width: 100%;
   height: 100%;
 }
@@ -55,7 +55,7 @@ body {
   height:100%;
   top: 4rem;
   left: 0;
-  visibility: hidden;
+  display: none;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   -ms-backface-visibility: hidden;
@@ -69,7 +69,7 @@ body {
   transform-style: preserve-3d; }
 
   [data-role="page"].activePage {
-            visibility: visible;
+            display: block;
             z-index: 1; }
 
 
@@ -111,7 +111,7 @@ body {
 }
 [data-role=listview] li{
   font-size:1.4rem;
-  padding: 0 1rem;
+  padding-left: 1rem;
   line-height: 4rem;
   width: 100%;
   height: 4rem;
@@ -157,6 +157,7 @@ body {
     width: 7%;
     height:52%;
     padding-left: 1rem;
+    padding-top: 0.5rem;
 }
 
 #btnOk, #btnOk2{
@@ -177,9 +178,9 @@ body {
 
 }
 #contactsMap{
-    width: 96%;
-    height: 75%;
-    margin: 2%;
+    width: 90%;
+    height: 70%;
+    margin: 5%;
     z-index:20;
     border: 1px solid #3B628F;
 }
@@ -208,7 +209,7 @@ body {
   width: 100%;
   left: 0;
   bottom: 0;
-  height: 3rem;
+  height: 4rem;
   z-index: 1000;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
