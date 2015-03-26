@@ -12,7 +12,7 @@ html {
   touch-action: manipulation; }
 
 P {
-  font-family: "Roboto", "Georgia", sans-serif;
+  font-family: "Georgia", sans-serif;
   font-size: 1.4rem;
   color: #444; }
 
@@ -83,7 +83,7 @@ body {
   left: 0;
   top: 0;
   height: 4rem;
-  z-index: 14;
+  z-index: 10;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   transition: all 0.5s ease;
@@ -91,17 +91,18 @@ body {
 
 .appTitle h1 {
     box-sizing: border-box;
-    padding: 0.5rem;
+    padding: 1rem;
     text-align: center;
-    font-family: "Roboto", "Georgia", sans-serif;
+    font-family: "Georgia", sans-serif;
     font-size: 1.7rem;
     color: #DBD1BF;
     letter-spacing: 2px;
     display: inline-block;
     width: 100%;
+    overflow: hidden;
   }
 .appTitle h1.movedH1{
-    width: 75%;
+    width: 70%;
 }
 
 /* contacts page *********************************************************/
@@ -110,6 +111,7 @@ body {
   width: 100%;
 }
 [data-role=listview] li{
+  box-sizing: border-box;
   font-size:1.4rem;
   padding-left: 1rem;
   line-height: 4rem;
@@ -125,7 +127,7 @@ body {
   position:fixed;
   top:3;
   left:0;
-  z-index:10;
+  z-index:14;
   height:100%;
   width:100%;
   background-color: #AFC4DB;
@@ -134,11 +136,11 @@ body {
 }
 [data-role=modal]{
   position:fixed;
-  top:17%;
+  top:13%;
   left:3%;
   width: 76%;
   z-index:15;
-  height: 45%;
+  height: 60%;
   padding:5vh;
   border:1px solid #333;
   color:#DBD1BF;
@@ -156,8 +158,9 @@ body {
     display: none;
     width: 7%;
     height:52%;
-    padding-left: 1rem;
-    padding-top: 0.5rem;
+    padding-left: 1.5rem;
+    padding-bottom: 19px;
+
 }
 
 #btnOk, #btnOk2{
@@ -169,11 +172,11 @@ body {
     font-size: 1.3rem;
     background-color: #DBD1BF;
     color: #3B628F;
-    font-family: "Roboto", "Georgia", sans-serif;
+    font-family: "Georgia", sans-serif;
 }
 @media screen and (min-width: 500px){
     #btnOk, #btnOk2{
-        margin-top: 6%;
+        margin-top: 0;
     }
 
 }
@@ -210,7 +213,7 @@ body {
   left: 0;
   bottom: 0;
   height: 4rem;
-  z-index: 1000;
+  z-index: 10;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   transition: all 0.5s ease;
