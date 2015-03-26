@@ -12,8 +12,8 @@ html {
   touch-action: manipulation; }
 
 P {
-  font-family: "Garamond", sans-serif;
-  font-size: 1.2rem;
+  font-family: "Roboto", "Georgia", sans-serif;
+  font-size: 1.4rem;
   color: #444; }
 
 .clearfix:after {
@@ -53,7 +53,7 @@ body {
   position: absolute;
   width: 100%;
   height:100%;
-  top: 3rem;
+  top: 4rem;
   left: 0;
   visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -82,85 +82,27 @@ body {
   width: 100%;
   left: 0;
   top: 0;
-  height: 3rem;
-  z-index: 30;
+  height: 4rem;
+  z-index: 14;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
-  transition: all 0.5s ease; }
-  .appTitle h1 {
+  transition: all 0.5s ease;
+}
+
+.appTitle h1 {
     box-sizing: border-box;
     padding: 0.5rem;
     text-align: center;
-    font-family: "Georgia", cursive;
-    font-size: 1.5rem;
+    font-family: "Roboto", "Georgia", sans-serif;
+    font-size: 1.7rem;
     color: #DBD1BF;
     letter-spacing: 2px;
     display: inline-block;
-    width: 100%;}
-#movedH1{
+    width: 100%;
+  }
+.appTitle h1.movedH1{
     width: 75%;
-
 }
-/* Horizontal Menu *********************************************************/
-.navBar {
-  position: fixed;
-  width: 100%;
-  top: 3rem;
-  display: block;
-  height: 3rem;
-  z-index: 29; }
-  .navBar ul {
-    list-style: none;
-    margin: 0;
-    background-color: #FBF8D3;
-    width: 100%; }
-  .navBar li {
-    float: left;
-    height: 3rem;
-    width: 50%; }
-  .navBar .button {
-    color: #484848;
-    background-color: #AFC4DB;
-    display: block;
-    height: 3rem;
-    text-decoration: none;
-    text-align: center;
-    font-size: 1.3rem;
-    font-family: "Georgia", cursive; }
-  .navBar .button.activeTab {
-    background-color: #E5F2FF; }
-/* SVG Icons *********************************************************/
-
-svg {
-  width: 25px;
-  height: 25px;
-  padding-top: 5px; }
-
-.activeTab #Home {
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -o-transform: scale(1.1);
-  transform: scale(1.1); }
-  .activeTab #Home #door {
-    fill: black; }
-  .activeTab #Home #triangle {
-    fill: black; }
-
-.activeTab #location-pin {
-  -webkit-transform: rotate(-25deg) scale(1.1);
-  -moz-transform: rotate(-25deg) scale(1.1);
-  -o-transform: rotate(-25deg) scale(1.1);
-  transform: rotate(-25deg) scale(1.1); }
-  .activeTab #location-pin #arrow {
-    fill: black; }
-
-.activeTab #contact1 {
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -o-transform: scale(1.1);
-  transform: scale(1.1); }
-  .activeTab #contact1 #body {
-    fill: black; }
 
 /* contacts page *********************************************************/
 [data-role=listview]{
@@ -168,15 +110,15 @@ svg {
   width: 100%;
 }
 [data-role=listview] li{
-  font-size:1.2rem;
-  padding: 0 0.5rem;
-  line-height:3rem;
+  font-size:1.4rem;
+  padding: 0 1rem;
+  line-height: 4rem;
   width: 100%;
-  height:3rem;
+  height: 4rem;
   border:1px solid #3B628F;
   background-color:#DBD1BF;
   color:#3B628F;
-  font-weight:300;
+  font-weight: 500;
   cursor:pointer;
 }
 [data-role=overlay]{
@@ -204,15 +146,11 @@ svg {
   box-shadow:1px 1px 2px rgb(0,0,0);
   display: none;
 }
-.contactinfo{
-    height: 15%;
-    width: 99%;
- color:#DBD1BF;
+[data-role=modal] p{
+  color:#DBD1BF;
 }
-#contactInfoForm{
-    width: 100%;
-    height: 100%;
-
+[data-role=modal] h3{
+    font-size: 1.5rem;
 }
 #backBtn{
     display: none;
@@ -221,15 +159,22 @@ svg {
     padding-left: 1rem;
 }
 
-
 #btnOk, #btnOk2{
-    width: 20%;
-    height:20%;
-    margin-top: 33%;
+    width: 25%;
+    height:21%;
+    margin-top: 20%;
     margin-left: 40%;
     border-radius: 10px;
-    font-size: 1rem;
-    font-family: "Garamond", sans-serif;
+    font-size: 1.3rem;
+    background-color: #DBD1BF;
+    color: #3B628F;
+    font-family: "Roboto", "Georgia", sans-serif;
+}
+@media screen and (min-width: 500px){
+    #btnOk, #btnOk2{
+        margin-top: 6%;
+    }
+
 }
 #contactsMap{
     width: 96%;
@@ -267,10 +212,15 @@ svg {
   z-index: 1000;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
-  transition: all 0.5s ease; }
-  .footer P {
+  transition: all 0.5s ease;
+}
+
+.footer P {
     text-align: center;
+    font-size: 1.2rem;
+    line-height: 1rem;
     padding-top: 17px;
-    color: #DBD1BF;}
+    color: #DBD1BF;
+}
 
 
