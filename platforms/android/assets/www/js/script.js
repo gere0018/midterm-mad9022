@@ -8,6 +8,8 @@ var midterm_gere0018 = {
     contactPostion:"",
     contactsMap: "",
     backBtn: "",
+    modal:"",
+    msgBox:"",
     overlay:"",
     H1:"",
     marker:"",
@@ -36,6 +38,8 @@ var midterm_gere0018 = {
         overlay = document.querySelector('[data-role=overlay]');
         H1 = document.querySelector("h1");
         contactsMap = document.querySelector("#contactsMap");
+        modal = document.querySelector('[data-role= modal]');
+        msgBox = document.querySelector("#msgBox");
 
         //find the user's location to create map*****************************************
         if( navigator.geolocation ){
@@ -88,15 +92,7 @@ var midterm_gere0018 = {
    },
      //placemarker function allows the user only one marker
    placeMarker: function placeMarker(location) {
-        console.log("Inside placeMarker");
-//                  if ( midterm_gere0018.marker ) {
-//                      console.log("marker has a value");
-//                    midterm_gere0018.marker.setPosition(location);
-//
-//                   // midterm_gere0018.marker.setAnimation(null);
-//                    midterm_gere0018.marker.setAnimation(google.maps.Animation.DROP);
-//                  } else {
-//                      console.log("marker new");
+          console.log("Inside placeMarker");
           midterm_gere0018.marker.setPosition(location);
           midterm_gere0018.marker.setAnimation(google.maps.Animation.BOUNCE);
           midterm_gere0018.marker.setMap(map);
@@ -159,7 +155,7 @@ var midterm_gere0018 = {
     },
     //function that gets executed on single tap
     displayContact: function(ev){
-       var modal = document.querySelector('[data-role= modal]');
+
        var ok = document.querySelector('#btnOk');
        var contactName = document.querySelector('#contactName');
        var contactPhoneNumbers = document.querySelector('#contactPhoneNumbers');
@@ -176,6 +172,7 @@ var midterm_gere0018 = {
          }
        overlay.style.display = "block";
        modal.style.display = "block";
+       history.pushState(null, null, "#overlay");
        var hammerOk = new Hammer(ok);
        hammerOk.on('tap', function(){
             overlay.style.display = "none";
@@ -241,7 +238,6 @@ var midterm_gere0018 = {
         }else{
              //if there is no saved value for longitude and latitude in local storage,
             //display msg to user
-            var msgBox = document.querySelector("#msgBox");
             msgBox.style.display = "block";
             overlay.style.display = "block";
             //ok button allows user to go back to map
@@ -260,6 +256,9 @@ var midterm_gere0018 = {
       pages[0].classList.add("activePage");
       backBtn.style.display ="none";
       H1.classList.remove("movedH1");
+      overlay.style.display = "none";
+      modal.style.display = "none";
+      msgBox.style.display = "none";
     },
 
     //location error function
